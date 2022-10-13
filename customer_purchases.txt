@@ -1,0 +1,484 @@
+Table Creation 
+
+create table purchase(
+
+	order_no varchar(25) not null primary key,
+	custno varchar(25) not null,
+	prodno varchar(25) not null, 
+	quantity int not null,
+	orderdate date,
+	foreign key (custno) references customer(cust_no),
+	foreign key (prodno) references product(product_no)
+	);
+	
+
+create table product (
+	product_no varchar(15) not null primary key, 
+	description varchar(25) not null, 
+	company varchar(15) not null, 
+	price int not null
+	);
+
+create table customer( 
+	cust_no varchar(25) not null primary key,
+	name varchar(15) not null, age int not null,  
+	city varchar(15) not null, 
+	pincode int not null,
+	state varchar(15) not null
+	);
+
+create table supplier( 
+	s_no varchar(10) not null primary key, 
+	sname varchar(15) not null, 
+	age int not null, 
+	city varchar(15) not null
+	);
+	
+Insertion
+
+insert into purchase values ('O00001', 'C00002', 'P00003', 2, '20/10/16');
+insert into purchase values ('O00002', 'C00003', 'P00002', 1, '27/01/16');
+insert into purchase values ('O00003', 'C00006', 'P00001', 3, '20/02/16');
+insert into purchase values ('O00004', 'C00003', 'P00005', 4, '07/04/16');
+insert into purchase values ('O00005', 'C00004', 'P00002', 2, '22/05/16');
+insert into purchase values ('O00006', 'C00005', 'P00004', 1, '26/05/16');
+
+insert into supplier values ('S001', 'Ivan Bayross', 35, 'Bombay');
+insert into supplier values ('S002', 'Nirmala Agarwal', 25, 'Madras');
+insert into supplier values ('S003', 'Susmitha ', 55, 'Bombay');
+insert into supplier values ('S004', 'Basu Navivelgi', 45, 'Bombay');
+insert into supplier values ('S005', 'Ravi Sreedharan', 25, 'Delhi');
+insert into supplier values ('S006', 'Nanda Gopal', 25, 'Madras');
+
+
+
+
+insert into customer values('C00001', 'Ivan Bayross', 35, 'Bombay', 400054, 'Maharashtra');
+insert into customer values('C00002', 'Vandana Saitwal', 35, 'Madras', 780001, 'Tamil Nadu');
+insert into customer values('C00003', 'Pramada Jaguste', 55, 'Bombay', 400057, 'Maharshtra');
+insert into customer values('C00004', 'Basu Navindgi', 45, 'Bombay', 400056, 'Maharashtra');
+insert into customer values('C00005', 'Ravi Sreedharan', 25, 'Delhi', 100001, 'Delhi');
+insert into customer values('C00006', 'Rukmini', 25, 'Madras', 780001, 'Tamil Nadu');
+
+
+
+
+insert into product values('P00001', '12 W Flood Light', 'Wipro', 5000);
+insert into product values('P00002', 'Laptop Adapter', 'Dell', 1560);
+insert into product values('P00003', 'Tablet', 'HCL', 11000);
+insert into product values('P00004', 'Garnet 50 W Led', 'Wipro', 999);
+insert into product values('P00005', 'Laptop Charger', 'HCL', 1690);
+
+
+Display
+
+select * from purchase;
+
+ORDER_NO		  CUSTNO		    PRODNO
+------------------------- ------------------------- -------------------------
+  QUANTITY ORDERDATE
+---------- --------
+O00001			  C00002		    P00003
+	 2 20-10-16
+
+O00002			  C00003		    P00002
+	 1 27-01-16
+
+O00004			  C00003		    P00005
+	 4 07-04-16
+
+
+ORDER_NO		  CUSTNO		    PRODNO
+------------------------- ------------------------- -------------------------
+  QUANTITY ORDERDAT
+---------- --------
+O00005			  C00004		    P00002
+	 2 22-05-16
+
+O00006			  C00005		    P00004
+	 1 26-05-16
+
+O00003			  C00006		    P00001
+	 3 20-02-16
+
+
+select * from product;
+
+PRODUCT_NO	DESCRIPTION		  COMPANY	       PRICE
+--------------- ------------------------- --------------- ----------
+P00001		12 W Flood Light	  Wipro 		5000
+P00002		Laptop Adapter		  Dell			1560
+P00003		Tablet			  HCL		       11000
+P00004		Garnet 50 W Led 	  Wipro 		 999
+P00005		Laptop Charger		  HCL			1690
+
+
+select * from customer;
+
+CUST_NO 		  NAME			 AGE CITY		PINCODE
+------------------------- --------------- ---------- --------------- ----------
+STATE
+---------------
+C00001			  Ivan Bayross		  35 Bombay		 400054
+Maharashtra
+
+C00002			  Vandana Saitwal	  35 Madras		 780001
+Tamil Nadu
+
+C00003			  Pramada Jaguste	  55 Bombay		 400057
+Maharshtra
+
+
+CUST_NO 		  NAME			 AGE CITY		PINCODE
+------------------------- --------------- ---------- --------------- ----------
+STATE
+---------------
+C00004			  Basu Navindgi 	  45 Bombay		 400056
+Maharashtra
+
+C00005			  Ravi Sreedharan	  25 Delhi		 100001
+Delhi
+
+C00006			  Rukmini		  25 Madras		 780001
+Tamil Nadu
+
+select * from supplier;
+
+S_NO	   SNAME		  AGE CITY
+---------- --------------- ---------- ---------------
+S001	   Ivan Bayross 	   35 Bombay
+S002	   Nirmala Agarwal	   25 Madras
+S003	   Susmitha		   55 Bombay
+S004	   Basu Navivelgi	   45 Bombay
+S005	   Ravi Sreedharan	   25 Delhi
+S006	   Nanda Gopal		   25 Madras
+
+
+
+Queries
+
+1. List all Customers in Madras
+
+   select * from customer where city = 'Madras';
+
+CUST_NO 		  NAME			 AGE CITY		PINCODE
+------------------------- --------------- ---------- --------------- ----------
+STATE
+---------------
+C00002			  Vandana Saitwal	  35 Madras		 780001
+Tamil Nadu
+
+C00006			  Rukmini		  25 Madras		 780001
+Tamil Nadu
+
+2. List all customer numbers of all who purchase the product in the month on January
+
+select custno from purchase where orderdate like '%-01-%';
+
+CUSTNO
+-------------------------
+C00003
+
+3. List the name of company whose price is greater than 5000?
+
+select company from product where price > 5000;
+
+COMPANY
+---------------
+HCL
+
+4.List all the customers whose name is not beginning with 'r'?
+
+select name from customer where name not like 'r%';
+
+NAME
+---------------
+Ivan Bayross
+Vandana Saitwal
+Pramada Jaguste
+Basu Navindgi
+Ravi Sreedharan
+Rukmini
+
+5.Add email field into customer table
+
+alter table customer add email varchar(25);
+
+Table altered.
+
+6.List all the customers where age is greater than 40 adn in Maharashtra
+
+select * from customer where age > 40 and state = 'Maharashtra';
+
+CUST_NO 		  NAME			 AGE CITY		PINCODE
+------------------------- --------------- ---------- --------------- ----------
+STATE		EMAIL
+--------------- -------------------------
+C00004			  Basu Navindgi 	  45 Bombay		 400056
+Maharashtra
+
+7.Display the company's name in the decreasing order of price
+
+select company from product order by price desc;
+
+COMPANY
+---------------
+HCL
+Wipro
+HCL
+Dell
+Wipro
+
+8.Calculate average age of customers from table customer
+
+select avg(age) from customer;
+
+  AVG(AGE)
+----------
+36.6666667
+
+9.List cities of customers from states Maharshtra and Tamil Nadu
+
+select city, name from customer where state = 'Maharashtra' or state = 'Tamil Nadu';
+
+CITY		NAME
+--------------- ---------------
+Bombay		Ivan Bayross
+Madras		Vandana Saitwal
+Bombay		Basu Navindgi
+Madras		Rukmini
+
+10.Find average price from table product
+
+select avg(price) from product;
+
+AVG(PRICE)
+----------
+    4049.8
+
+11.List all customers nos in the increasing order of quantity from table purchase
+
+select custno from purchase order by quantity;
+
+CUSTNO
+-------------------------
+C00003
+C00005
+C00002
+C00004
+C00006
+C00003
+
+12.Update product number of customer number C00003 to P00008
+
+update purchase set prodno = 'P00008' where custno = 'C00003';
+
+13.Find the number of customer from city Delhi
+
+select count(city) from customer where city = 'Delhi';
+
+COUNT(CITY)
+-----------
+	  1
+
+14. List customer names of all customers who have purchased more than 3 items
+
+select custno from purchase where quantity > 3;
+
+CUSTNO
+-------------------------
+C00003
+
+15.Modify the structure fo order date field into character
+
+update purchase set orderdate = null;
+alter table purchase modify orderdate varchar(25);
+describe purchase;
+
+ Name					   Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ORDER_NO				   NOT NULL VARCHAR2(25)
+ CUSTNO 				   NOT NULL VARCHAR2(25)
+ PRODNO 				   NOT NULL VARCHAR2(25)
+ QUANTITY				   NOT NULL NUMBER(38)
+ ORDERDATE					    VARCHAR2(25)
+
+16.Find min and max price from product table
+
+select min(price), max(price) from product
+
+MIN(PRICE) MAX(PRICE)
+---------- ----------
+       999	11000ORDER_NO		  CUSTNO		    PRODNO
+------------------------- ------------------------- -------------------------
+  QUANTITY ORDERDAT
+---------- --------
+O00001			  C00002		    P00003
+	 2 20-10-16
+
+O00006			  C00005		    P00004
+	 1 26-05-16
+
+O00005			  C00004		    P00002
+	 2 22-05-16
+
+
+ORDER_NO		  CUSTNO		    PRODNO
+------------------------- ------------------------- -------------------------
+  QUANTITY ORDERDAT
+---------- --------
+O00004			  C00003		    P00005
+	 4 07-04-16
+
+O00003			  C00006		    P00001
+	 3 20-02-16
+
+O00002			  C00003		    P00002
+	 1 27-01-16
+
+
+17.Find number of products by wipro and HCL separately
+
+select company, count(*) as number_of_products from product group by company having company = 'HCL' or company = 'Wipro';
+
+COMPANY 	NUMBER_OF_PRODUCTS
+--------------- ------------------
+Wipro				 2
+HCL				 2
+
+
+
+18.List all customers in alphabetical order
+
+select name from customer order by name;
+
+NAME
+---------------
+Basu Navindgi
+Ivan Bayross
+Pramada Jaguste
+Ravi Sreedharan
+Rukmini
+Vandana Saitwal
+
+19.Sort the content of purchase table in descending order of date
+
+select * from purchase order by orderdate desc;
+
+ORDER_NO		  CUSTNO		    PRODNO
+------------------------- ------------------------- -------------------------
+  QUANTITY ORDERDAT
+---------- --------
+O00001			  C00002		    P00003
+	 2 20-10-16
+
+O00006			  C00005		    P00004
+	 1 26-05-16
+
+O00005			  C00004		    P00002
+	 2 22-05-16
+
+
+ORDER_NO		  CUSTNO		    PRODNO
+------------------------- ------------------------- -------------------------
+  QUANTITY ORDERDAT
+---------- --------
+O00004			  C00003		    P00005
+	 4 07-04-16
+
+O00003			  C00006		    P00001
+	 3 20-02-16
+
+O00002			  C00003		    P00002
+	 1 27-01-16
+
+
+20.Delete the product with product_no = P00003
+
+delete from purchase where prodno = 'P00003';
+delete from product where product_no = 'P00003';
+
+21.copy the contents of field order_no and order_date of purchase table into new table
+
+create table orders as (select order_no, orderdate from purchase);
+select * from orders;
+
+ORDER_NO		  ORDERDAT
+------------------------- --------
+O00002			  27-01-16
+O00003			  20-02-16
+O00004			  07-04-16
+O00005			  22-05-16
+O00006			  26-05-16
+
+22.drop the newly created table
+
+drop table orders
+
+Table dropped.
+
+23.create view of customer table
+
+create view test as select * from customer;
+
+24.List names of customers who have places more than one order
+
+select name from customer where cust_no in ( select custno from purchase group by custno having count(*) > 1);
+
+NAME
+---------------
+Pramada Jaguste
+
+25.Retrieve transaction details of customers who lives in the same city, obtain result through self_join
+
+select purchase.*, city from customer inner join purchase on purchase.custno = customer.cust_no where city in (select city from customer group by city having count(*) > 1);
+
+ORDER_NO		  CUSTNO		    PRODNO
+------------------------- ------------------------- -------------------------
+  QUANTITY ORDERDAT CITY
+---------- -------- ---------------
+O00004			  C00003		    P00005
+	 4 07-04-16 Bombay
+
+O00002			  C00003		    P00002
+	 1 27-01-16 Bombay
+
+O00005			  C00004		    P00002
+	 2 22-05-16 Bombay
+
+
+ORDER_NO		  CUSTNO		    PRODNO
+------------------------- ------------------------- -------------------------
+  QUANTITY ORDERDAT CITY
+---------- -------- ---------------
+O00003			  C00006		    P00001
+	 3 20-02-16 Madras
+
+
+26.Retrieve customer names starting with 'R'
+
+select name from customer where name like 'R%';
+
+NAME
+---------------
+Ravi Sreedharan
+Rukmini
+
+27. List names of persons who are either a supplier or a customer
+
+select sname from supplier union select name from customer;
+
+SNAME
+---------------
+Basu Navindgi
+Basu Navivelgi
+Ivan Bayross
+Nanda Gopal
+Nirmala Agarwal
+Pramada Jaguste
+Ravi Sreedharan
+Rukmini
+Susmitha
+Vandana Saitwal
+
+
