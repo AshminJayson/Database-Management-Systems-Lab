@@ -427,17 +427,17 @@ Soosan		     28500
 26.Find NAME, JOB, DEP NAME, LOCATION of all female employee order by
 EMPNAME.
 
-select e.name, e.job, e.dep_no, d.loc from employee e, department d where e.sex = 'F' and d.dep_no = e.dep_no order by e.empno;
+select e.name, e.job, e.dep_no, d.loc from employee e, department d where e.sex = 'F' and d.dep_no = e.dep_no order by e.name;
 
 NAME		JOB		    DEP_NO LOC
 --------------- --------------- ---------- ---------------
-Smitha		SLSM			40 Trichur
-Tina		CLRK			50 Kottayam
-Karthika	MNGR			10 Cochin
-Rita		MNGR			50 Kottayam
-Manacy		CLRK			10 Cochin
 Deepa		ANLST			60 Trivandrum
+Karthika	MNGR			10 Cochin
+Manacy		CLRK			10 Cochin
+Rita		MNGR			50 Kottayam
+Smitha		SLSM			40 Trichur
 Soosan		SLSM			60 Trivandrum
+Tina		CLRK			50 Kottayam
 
 27.Find the EMPNAME,DEP,NAME of all manager order by department name.
 
