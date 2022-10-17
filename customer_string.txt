@@ -1,0 +1,227 @@
+Table Creation
+
+create table customerst(
+	cust_id int not null primary key,
+	cust_name varchar(35) not null,
+	city varchar(25) not null,
+	amount int not null,
+	discount int not null,
+	salesman_id varchar(25) not null);
+	
+Insertion
+
+insert into customerst values(100, 'Deepa', 'Trivandrum', 1050, 2, 'K0010');
+insert into customerst values(101, 'Don', 'Trivandrum', 8040, 4, 'K0010');
+insert into customerst values(102, 'Monacy', 'Kollam', 20030, 6, 'A200tmp');
+insert into customerst values(103, 'Karthika', 'Ernakulam', 8400, 20, 'EkmX1050');
+insert into customerst values(104, 'Tulasi', 'Ernakulam', 2500, 2, 'EkmY2342');
+insert into customerst values(105, 'Roy', 'Trivandrum', 2900, 14, 'L1045');
+insert into customerst values(106, 'Vivek', 'Trivandrum', 3200, 8, 'L1045');
+insert into customerst values(108, 'Bhasi', 'Kottayam', 12860, 10, 'KtmP1028');
+insert into customerst values(109, 'Anurag','Kottayam', 3860, 12, 'KtmB158tmp');
+insert into customerst values(110, 'Antony', 'Kottayam', 9800, 8, 'KtmP1028');
+insert into customerst values(111, 'Meeran', 'Trichur', 6700, 6, 'R3085');
+  
+
+1. Select all customers with a customername starting with "a"
+
+select * from customerst where cust_name like 'a%';
+
+no rows selected
+
+2. Select all customers with a customername starting with "a" or "A"
+
+select * from customerst where cust_name like 'a%' or cust_name like 'A%';
+
+   CUST_ID CUST_NAME			       CITY
+---------- ----------------------------------- -------------------------
+    AMOUNT   DISCOUNT SALESMAN_ID
+---------- ---------- -------------------------
+       109 Anurag			       Kottayam
+      3860	   12 KtmB158tmp
+
+       110 Antony			       Kottayam
+      9800	    8 KtmP1028
+
+
+3. Modify customer names such that all customer names start with a capital letter
+
+update customerst set cust_name = concat(upper(substr(cust_name,1,1)),substr(cust_name, 2));
+
+CUST_NAME
+-----------------------------------
+Deepa
+Don
+Monacy
+Karthika
+Tulasi
+Roy
+Vivek
+Bhasi
+Anurag
+Antony
+Meeran
+
+11 rows selected.
+
+4. Find city values ending with "a"
+
+select city from customerst where city like '%a';
+
+no rows selected
+
+5. Return first 3 characters of salesman_ID 
+
+select substr(salesman_id,1,3) as salesman_id from customerst;
+
+SALESMAN_ID
+------------
+K00
+K00
+A20
+Ekm
+Ekm
+L10
+L10
+Ktm
+Ktm
+Ktm
+R30
+
+11 rows selected.
+
+6. Find salesmanids with "tmp" in any position
+
+select salesman_id from customerst where salesman_id like '%tmp%';
+
+SALESMAN_ID
+-------------------------
+A200tmp
+KtmB158tmp
+
+7. Find count of city values that start with "T"
+
+select count(city) from customerst where city like 'T%';
+
+COUNT(CITY)
+-----------
+	  5
+
+8. Select customer names starting with D and of atleast 4 characters
+
+select cust_name from customerst where cust_name like 'D%' and length(cust_name) >= 4;
+
+CUST_NAME
+-----------------------------------
+Deepa
+
+9. Finds city values that start with "K" and are at least 2 characters in length
+
+select city from customerst where city like 'K%' and length(city) >= 2;
+
+CITY
+-------------------------
+Kollam
+Kottayam
+Kottayam
+Kottayam
+
+10. Finds city values that start with "K" and are at least 7 characters in length
+
+select city from customerst where city like 'K%' and length(city) >= 7;
+
+CITY
+-------------------------
+Kottayam
+Kottayam
+Kottayam
+
+
+11. Finds city values that start with "K" and ends with "m"
+
+select city from customerst where city like 'K%m';
+
+CITY
+-------------------------
+Kollam
+Kottayam
+Kottayam
+Kottayam
+
+12. Display salesman details with salesman_ID, total amount given as discount and maximum
+discount provided by him in percentage with % symbol
+
+select salesman_id, sum(discount) || '%' as discountpercentage from customerst group by salesman_id;
+
+SALESMAN_ID		  DISCOUNTPERCENTAGE
+------------------------- -----------------------------------------
+A200tmp 		  6%
+EkmX1050		  20%
+KtmB158tmp		  12%
+R3085			  6%
+KtmP1028		  18%
+K0010			  6%
+L1045			  22%
+EkmY2342		  2%
+
+8 rows selected.
+
+
+13. Display city names in uppercase
+
+select upper(city) as city from customerst;
+
+CITY
+-------------------------
+TRIVANDRUM
+TRIVANDRUM
+KOLLAM
+ERNAKULAM
+ERNAKULAM
+TRIVANDRUM
+TRIVANDRUM
+KOTTAYAM
+KOTTAYAM
+KOTTAYAM
+TRICHUR
+
+11 rows selected.
+
+14. Update salesman_ID of all salesman from Ernakulam by removing the prefix "Ekm"
+
+update customerst set salesman_id = substr(salesman_id, 4) where city = 'Ernakulam';
+
+SALESMAN_ID
+-------------------------
+K0010
+K0010
+A200tmp
+X1050
+Y2342
+L1045
+L1045
+KtmP1028
+KtmB158tmp
+KtmP1028
+R3085
+
+11 rows selected.
+
+15. Display total sales amount of each salesperson till today with today's date in dd-mon-yyyy
+
+select salesman_id, sum(amount), '17-10-2022' from customerst group by salesman_id;
+
+SALESMAN_ID		  SUM(AMOUNT) '17-10-202
+------------------------- ----------- ----------
+X1050				 8400 17-10-2022
+A200tmp 			20030 17-10-2022
+Y2342				 2500 17-10-2022
+KtmB158tmp			 3860 17-10-2022
+R3085				 6700 17-10-2022
+KtmP1028			22660 17-10-2022
+K0010				 9090 17-10-2022
+L1045				 6100 17-10-2022
+
+8 rows selected.
+
+
