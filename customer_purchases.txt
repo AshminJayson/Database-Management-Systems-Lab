@@ -1,4 +1,26 @@
+Ashmin Jayson S5 DS
+Roll No : 14
+Experiment 2 : Customer-Product-Purchase Relations
+Date : 18/9/22
+
 Table Creation 
+
+Table design :
+PURCHASE (order_no notnull int,custno notnull int, prono varchar(15) notnull,quantity
+notnull int, orderdate date, primarykey order_no, foreignkey cust no, foreignkey prono)
+
+
+PRODUCT (product_no notnull varchar(15),description notnul lvarchar(15), company
+notnull varchar(15),price notnull int, primarykey product_no)
+
+CUSTOMER (cust_no notnull varchar(15), name notnullvarchar(15), age notnull int,city
+notnull varchar(15), pincode notnull int, state notnullvarchar(15), primarykey cust_no)
+
+SUPPLIER (s_no notnull varchar(10), sname notnullvarchar(15), age notnull int,city notnull
+varchar(15), primarykey sno)
+
+-----------------------------------------------------------------------------------------
+
 
 create table purchase(
 
@@ -10,6 +32,14 @@ create table purchase(
 	foreign key (custno) references customer(cust_no),
 	foreign key (prodno) references product(product_no)
 	);
+
+ Name					   Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ORDER_NO				   NOT NULL VARCHAR2(25)
+ CUSTNO 				   NOT NULL VARCHAR2(25)
+ PRODNO 				   NOT NULL VARCHAR2(25)
+ QUANTITY				   NOT NULL NUMBER(38)
+ ORDERDATE					    DATE
 	
 
 create table product (
@@ -18,6 +48,14 @@ create table product (
 	company varchar(15) not null, 
 	price int not null
 	);
+	
+	 Name					   Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PRODUCT_NO				   NOT NULL VARCHAR2(15)
+ DESCRIPTION				   NOT NULL VARCHAR2(25)
+ COMPANY				   NOT NULL VARCHAR2(15)
+ PRICE					   NOT NULL NUMBER(38)
+
 
 create table customer( 
 	cust_no varchar(25) not null primary key,
@@ -26,6 +64,17 @@ create table customer(
 	pincode int not null,
 	state varchar(15) not null
 	);
+	
+ Name					   Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CUST_NO				   NOT NULL VARCHAR2(25)
+ NAME					   NOT NULL VARCHAR2(15)
+ AGE					   NOT NULL NUMBER(38)
+ CITY					   NOT NULL VARCHAR2(15)
+ PINCODE				   NOT NULL NUMBER(38)
+ STATE					   NOT NULL VARCHAR2(15)
+ EMAIL						    VARCHAR2(25)
+
 
 create table supplier( 
 	s_no varchar(10) not null primary key, 
@@ -33,6 +82,14 @@ create table supplier(
 	age int not null, 
 	city varchar(15) not null
 	);
+	
+ Name					   Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ S_NO					   NOT NULL VARCHAR2(10)
+ SNAME					   NOT NULL VARCHAR2(15)
+ AGE					   NOT NULL NUMBER(38)
+ CITY					   NOT NULL VARCHAR2(15)
+
 	
 Insertion
 
@@ -50,18 +107,12 @@ insert into supplier values ('S004', 'Basu Navivelgi', 45, 'Bombay');
 insert into supplier values ('S005', 'Ravi Sreedharan', 25, 'Delhi');
 insert into supplier values ('S006', 'Nanda Gopal', 25, 'Madras');
 
-
-
-
 insert into customer values('C00001', 'Ivan Bayross', 35, 'Bombay', 400054, 'Maharashtra');
 insert into customer values('C00002', 'Vandana Saitwal', 35, 'Madras', 780001, 'Tamil Nadu');
 insert into customer values('C00003', 'Pramada Jaguste', 55, 'Bombay', 400057, 'Maharshtra');
 insert into customer values('C00004', 'Basu Navindgi', 45, 'Bombay', 400056, 'Maharashtra');
 insert into customer values('C00005', 'Ravi Sreedharan', 25, 'Delhi', 100001, 'Delhi');
 insert into customer values('C00006', 'Rukmini', 25, 'Madras', 780001, 'Tamil Nadu');
-
-
-
 
 insert into product values('P00001', '12 W Flood Light', 'Wipro', 5000);
 insert into product values('P00002', 'Laptop Adapter', 'Dell', 1560);
@@ -159,7 +210,7 @@ Queries
 
 1. List all Customers in Madras
 
-   select * from customer where city = 'Madras';
+  select * from customer where city = 'Madras';
 
 CUST_NO 		  NAME			 AGE CITY		PINCODE
 ------------------------- --------------- ---------- --------------- ----------
@@ -396,7 +447,41 @@ O00002			  C00003		    P00002
 20.Delete the product with product_no = P00003
 
 delete from purchase where prodno = 'P00003';
+
+PRODUCT_NO	DESCRIPTION		  COMPANY	       PRICE
+--------------- ------------------------- --------------- ----------
+P00001		12 W Flood Light	  Wipro 		5000
+P00002		Laptop Adapter		  Dell			1560
+P00004		Garnet 50 W Led 	  Wipro 		 999
+P00005		Laptop Charger		  HCL			1690
+
 delete from product where product_no = 'P00003';
+
+ORDER_NO		  CUSTNO		    PRODNO
+------------------------- ------------------------- -------------------------
+  QUANTITY ORDERDAT
+---------- --------
+O00002			  C00003		    P00002
+	 1 27-01-16
+
+O00003			  C00006		    P00001
+	 3 20-02-16
+
+O00004			  C00003		    P00005
+	 4 07-04-16
+
+
+ORDER_NO		  CUSTNO		    PRODNO
+------------------------- ------------------------- -------------------------
+  QUANTITY ORDERDAT
+---------- --------
+O00005			  C00004		    P00002
+	 2 22-05-16
+
+O00006			  C00005		    P00004
+	 1 26-05-16
+
+
 
 21.copy the contents of field order_no and order_date of purchase table into new table
 

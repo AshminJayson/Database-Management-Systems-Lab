@@ -1,4 +1,22 @@
+Ashmin Jayson S5 DS
+Roll No : 14
+Experiment 3 : Department-Employee Relations
+
 Table Creation
+
+Department (Dep_No Primary Key Not Null Number(38), Dep_Name Not Null
+Varchar2(15), Loc Not Null Varchar2(15), Mgr Not Null Number(38), Exp_Bdg
+Not Null Number(38), Rev_Bdg Not Null Number(38))
+
+Employee (Empno Not Null Number(38), Name Not Null Varchar2(15), Job Not
+Null Varchar2(15), Salary Not Null Number(38), Comm Varchar2(15), Dep_No
+Forien Key Number(38),Sex Varchar2(6))
+
+Dependant (Pid Not Null Number(38), Fname Not Null Varchar2(15), Lname
+Not Null Varchar2(15), Place Not Null Varchar2(15) Empno Not Null
+Number(38) )
+
+--------------------------------------------------------------------------
 
 create table department(
 	dep_no number(38) not null primary key,
