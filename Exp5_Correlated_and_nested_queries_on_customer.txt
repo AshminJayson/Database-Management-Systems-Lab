@@ -1,24 +1,46 @@
+Ashmin Jayson S5 DS
+Roll No : 14
+Experiment 5 : Nested and Correlated Queries
+Date : 27/10/22
+
+Aim : write queries to create and retrieve customer and product relationship
+
+Table Design : 
+
+PURCHASE (order_no notnull int,custno notnull int, prono varchar(15) notnull,quantity
+notnull int, orderdate date, primarykey order_no, foreignkey cust no, foreignkey prono)
+
+PRODUCT (product_no notnull varchar(15),description notnul lvarchar(15), company
+notnull varchar(15),price notnull int, primarykey product_no)
+
+CUSTOMER (cust_no notnull varchar(15), name notnullvarchar(15), age notnull int,city
+notnull varchar(15), pincode notnull int, state notnullvarchar(15), primarykey cust_no)
+
+SUPPLIER (s_no notnull varchar(10), sname notnullvarchar(15), age notnull int,city
+notnull varchar(15), primarykey sno)
+
+
 Table Creation
 
-create table purchasenc (
+create table purchase (
 	order_no varchar(25) not null primary key,
 	custno varchar(25) not null,
 	prodno varchar(25) not null, 
 	quantity int not null,
 	orderdate date,
-	foreign key (custno) references customernc(cust_no),
-	foreign key (prodno) references productnc(product_no)
+	foreign key (custno) references customer(cust_no),
+	foreign key (prodno) references product(product_no)
 	);
 	
 
-create table productnc (
+create table product (
 	product_no varchar(15) not null primary key, 
 	description varchar(25) not null, 
 	company varchar(15) not null, 
 	price int not null
 	);
 
-create table customernc ( 
+create table customer ( 
 	cust_no varchar(25) not null primary key,
 	name varchar(15) not null, age int not null,  
 	city varchar(15) not null, 
@@ -26,7 +48,7 @@ create table customernc (
 	state varchar(15) not null
 	);
 
-create table suppliernc ( 
+create table supplier ( 
 	s_no varchar(10) not null primary key, 
 	sname varchar(15) not null, 
 	age int not null, 
@@ -36,52 +58,49 @@ create table suppliernc (
 Insertion
 
 
-insert into productnc values('P00001', '12 W Flood Light', 'Wipro', 5000);
-insert into productnc values('P00002', 'Laptop Adapter', 'Dell', 1560);
-insert into productnc values('P00003', 'Tablet', 'HCL', 11000);
-insert into productnc values('P00004', 'Garnet 50 W Led', 'Wipro', 999);
-insert into productnc values('P00005', 'Laptop Charger', 'HCL', 1690);
+insert into product values('P00001', '12 W Flood Light', 'Wipro', 5000);
+insert into product values('P00002', 'Laptop Adapter', 'Dell', 1560);
+insert into product values('P00003', 'Tablet', 'HCL', 11000);
+insert into product values('P00004', 'Garnsqet 50 W Led', 'Wipro', 999);
+insert into product values('P00005', 'Laptop Charger', 'HCL', 1690);
 
-insert into customernc values('C00001', 'Ivan Bayross', 35, 'Bombay', 400054, 'Maharashtra');
-insert into customernc values('C00002', 'Vandana Saitwal', 35, 'Madras', 780001, 'Tamil Nadu');
-insert into customernc values('C00003', 'Pramada Jaguste', 55, 'Bombay', 400057, 'Maharshtra');
-insert into customernc values('C00004', 'Basu Navindgi', 45, 'Bombay', 400056, 'Maharashtra');
-insert into customernc values('C00005', 'Ravi Sreedharan', 25, 'Delhi', 100001, 'Delhi');
-insert into customernc values('C00006', 'Rukmini', 25, 'Madras', 780001, 'Tamil Nadu');
+insert into customer values('C00001', 'Ivan Bayross', 35, 'Bombay', 400054, 'Maharashtra');
+insert into customer values('C00002', 'Vandana Saitwal', 35, 'Madras', 780001, 'Tamil Nadu');
+insert into customer values('C00003', 'Pramada Jaguste', 55, 'Bombay', 400057, 'Maharshtra');
+insert into customer values('C00004', 'Basu Navindgi', 45, 'Bombay', 400056, 'Maharashtra');
+insert into customer values('C00005', 'Ravi Sreedharan', 25, 'Delhi', 100001, 'Delhi');
+insert into customer values('C00006', 'Rukmini', 25, 'Madras', 780001, 'Tamil Nadu');
 
-insert into suppliernc values ('S001', 'Ivan Bayross', 35, 'Bombay');
-insert into suppliernc values ('S002', 'Nirmala Agarwal', 25, 'Madras');
-insert into suppliernc values ('S003', 'Susmitha ', 55, 'Bombay');
-insert into suppliernc values ('S004', 'Basu Navivelgi', 45, 'Bombay');
-insert into suppliernc values ('S005', 'Ravi Sreedharan', 25, 'Delhi');
-insert into suppliernc values ('S006', 'Nanda Gopal', 25, 'Madras');
+insert into supplier values ('S001', 'Ivan Bayross', 35, 'Bombay');
+insert into supplier values ('S002', 'Nirmala Agarwal', 25, 'Madras');
+insert into supplier values ('S003', 'Susmitha ', 55, 'Bombay');
+insert into supplier values ('S004', 'Basu Navivelgi', 45, 'Bombay');
+insert into supplier values ('S005', 'Ravi Sreedharan', 25, 'Delhi');
+insert into supplier values ('S006', 'Nanda Gopal', 25, 'Madras');
 
-insert into purchasenc values ('O00001', 'C00002', 'P00003', 2, '20/01/16');
-insert into purchasenc values ('O00002', 'C00003', 'P00002', 1, '27/01/16');
-insert into purchasenc values ('O00003', 'C00004', 'P00002', 3, '28/01/16');
-insert into purchasenc values ('O00004', 'C00006', 'P00001', 3, '20/02/16');
-insert into purchasenc values ('O00005', 'C00003', 'P00005', 4, '07/04/16');
-insert into purchasenc values ('O00006', 'C00004', 'P00002', 2, '22/05/16');
-insert into purchasenc values ('O00007', 'C00005', 'P00004', 1, '26/05/16');
+insert into purchase values ('O00001', 'C00002', 'P00003', 2, '20/01/16');
+insert into purchase values ('O00002', 'C00003', 'P00002', 1, '27/01/16');
+insert into purchase values ('O00003', 'C00004', 'P00002', 3, '28/01/16');
+insert into purchase values ('O00004', 'C00006', 'P00001', 3, '20/02/16');
+insert into purchase values ('O00005', 'C00003', 'P00005', 4, '07/04/16');
+insert into purchase values ('O00006', 'C00004', 'P00002', 2, '22/05/16');
+insert into purchase values ('O00007', 'C00005', 'P00004', 1, '26/05/16');
 
 
 Write nested Queries for the following
 1. List customer- numbers of all who purchased the product 'Laptop Adapter' during January
 
-select custno from purchasenc where orderdate like '%01%' and prodno in (select product_no from product where description = 'Laptop Adapter');
+select custno from purchase where orderdate like '%01%' and prodno in (select product_no from product where description = 'Laptop Adapter');
 
 CUSTNO
--------------------------NAME
----------------
-Ravi Sreedharan
-Rukmini
-
+-------------------------
 C00003
 C00004
 
+
 2. Get customer names of all who purchased P00002
 
-select name from customernc where cust_no in (select custno from purchasenc where prodno = 'P00002');
+select name from customer where cust_no in (select custno from purchase where prodno = 'P00002');
 
 NAME
 ---------------
@@ -91,7 +110,7 @@ Basu Navindgi
 
 3. List customer- numbers of all who have purchased products with cost more than Rs 1600
 
-select custno from purchasenc where prodno in (select product_no from productnc where price > 1600);
+select custno from purchase where prodno in (select product_no from product where price > 1600);
 
 CUSTNO
 -------------------------
@@ -102,7 +121,7 @@ C00003
 4. List customer- names of all who have purchased products with cost more than Rs 1500
 during January
 
-select name from customernc where cust_no in (select custno from purchasenc where orderdate like '%01%' and prodno in (select product_no from productnc where price > 1500));
+select name from customer where cust_no in (select custno from purchase where orderdate like '%01%' and prodno in (select product_no from product where price > 1500));
 
 NAME
 ---------------
@@ -112,7 +131,7 @@ Basu Navindgi
 
 5. List customer- numbers of all who have purchased products with cost less than Rs 1600
 
-select distinct custno from purchasenc where prodno in (select product_no from productnc where price < 1600);
+select distinct custno from purchase where prodno in (select product_no from product where price < 1600);
 
 CUSTNO
 -------------------------
@@ -124,17 +143,18 @@ C00005
 6. Get customer numbers of purchases such that the qty is more than maximum qty of all
 purchases of C00002
 
-select custno from purchasenc where quantity > all(select max(quantity) from purchasenc group by custno having custno = 'C00002');
+select custno from purchase group by custno having sum(quantity) > all(select max(quantity) from purchase group by custno having custno = 'C00002');
 
 CUSTNO
 -------------------------
-C00004
-C00006
 C00003
+C00006
+C00004
+
 
 7. Get the name of all the customers who have not purchased any item currently
 
-select name from customernc where cust_no not in (select custno from purchasenc);
+select name from customer where cust_no not in (select custno from purchase);
 
 NAME
 ---------------
@@ -142,7 +162,7 @@ Ivan Bayross
 
 8. Get the name of all customers who have purchased at least one item from Wipro
 
-select name from customernc where cust_no in (select custno from purchasenc where prodno in (select product_no from productnc where company = 'Wipro'));
+select name from customer where cust_no in (select custno from purchase where prodno in (select product_no from product where company = 'Wipro'));
 
 NAME
 ---------------
@@ -151,18 +171,53 @@ Rukmini
 
 
 Write Correlated Queries for the following
-1. List all customer- number pairs such that cost of the item purchased by the first customer
+1. List all customer-number pairs such that cost of the item purchased by the first customer
 is less than that of second customer
 
-select a.custno from purchasenc where (select price from productnc where product_no = a.prodno) < (select price from productnc 
+select distinct c1.custno, c1.price, c2.custno, c2.price from (select * from purchase join product on purchase.prodno = product.product_no) c1,(select * from purchase join product on purchase.prodno = product.product_no) c2 where c1.price < c2.price;
+
+CUSTNO			       PRICE CUSTNO			    PRICE
+------------------------- ---------- ------------------------- ----------
+C00004				1560 C00006			     5000
+C00003				1560 C00006			     5000
+C00005				 999 C00003			     1690
+C00003				1690 C00002			    11000
+C00005				 999 C00004			     1560
+C00005				 999 C00006			     5000
+C00006				5000 C00002			    11000
+C00003				1560 C00002			    11000
+C00005				 999 C00003			     1560
+C00004				1560 C00002			    11000
+C00004				1560 C00003			     1690
+
+CUSTNO			       PRICE CUSTNO			    PRICE
+------------------------- ---------- ------------------------- ----------
+C00003				1560 C00003			     1690
+C00005				 999 C00002			    11000
+C00003				1690 C00006			     5000
+NAME
+---------------
+Pramada Jaguste
+
+14 rows selected.
 
 
-2. List pairs of customer- names of all who has purchased products with cost less than Rs
+
+2. List pairs of customer-names of all who has purchased products with total cost less than Rs
 1600
+
+select distinct cust_no, name from customer where cust_no in (select custno from purchase where prodno in (select product_no from product where price < 1600));
+
+CUST_NO 		  NAME
+------------------------- ---------------
+C00003			  Pramada Jaguste
+C00004			  Basu Navindgi
+C00005			  Ravi Sreedharan
+
 
 3. Get product nos of all products purchased by more than one customer
 
-select distinct prodno from purchasenc where prodno in ( select prodno from purchase group by prodno having count(*) > 1);
+select distinct prodno from purchase where prodno in ( select prodno from purchase group by prodno having count(*) > 1);
 
 PRODNO
 -------------------------
@@ -171,7 +226,7 @@ P00002
 
 4. Get the name of customers who have purchased the item P00002
 
-select name from customernc where cust_no in (select custno from purchasenc where prodno = 'P00002');
+select name from customer where cust_no in (select custno from purchase where prodno = 'P00002');
 
 NAME
 ---------------
@@ -180,7 +235,7 @@ Basu Navindgi
 
 5. Get the name of customers who have not purchased the item P00002
 
-select name from customernc where cust_no not in (select custno from purchasenc where prodno = 'P00002');
+select name from customer where cust_no not in (select custno from purchase where prodno = 'P00002');
 
 NAME
 ---------------
@@ -189,8 +244,13 @@ Rukmini
 Ravi Sreedharan
 Ivan Bayross
 
-6. get the name of customers who have purchased at least all those products purchased by
+6. Get the name of customers who have purchased at least all those products purchased by
 C00004
 
+select distinct name from customer where cust_no in (select custno from purchase where prodno = all(select prodno from purchase where custno = 'C00004') and custno <> 'C00004');
+
+NAME
+---------------
+Pramada Jaguste
 
 
