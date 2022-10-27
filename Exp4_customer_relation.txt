@@ -1,3 +1,14 @@
+Ashmin Jayson S5 DS
+Roll No : 14
+Experiment 4 : Customer-Relation
+Date : 21/10/22
+
+
+Aim : Write queries to create and retrieve data from the Customer relation using string
+operations
+
+Customer(Cust_ID,Cust_name, City,Amount, Discount, Salesman_ID)
+
 Table Creation
 
 create table customerst(
