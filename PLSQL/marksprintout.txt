@@ -1,0 +1,52 @@
+-- Ashmin Jayson S5 DS
+-- Roll No : 14
+-- Experiment 7 : Class Mark Evaluator using PLSQL
+-- Date : 03/11/22
+
+Table Creation and Insertion :
+
+create table students(RollNo number(10), Name varchar(20), Marks number(10));
+
+insert into students values(1, 'Anz', 100);
+insert into students values(2, 'Aysha', 99);
+insert into students values(3, 'Ramanan', 10);
+insert into students values(4, 'Kishore', 2);
+insert into students values(5, 'Tom', 0);
+insert into students values(6, 'Asssh', 5);
+insert into students values(7, 'Baiju', 10);
+
+Program Code : 
+
+set serveroutput on
+declare 
+avgm number(10);
+today varchar(20);
+weekday varchar(20);
+begin
+select avg(marks) into avgm from students;
+
+dbms_output.put_line('Average Marks : ' || avgm);
+if avgm < 40 then
+	dbms_output.put_line('Need Improvement');
+end if;
+
+select to_char(current_date, 'dd-mm-yyyy') into today from dual;
+select to_char(current_date, 'DAY') into weekday from dual;
+
+dbms_output.put_line('Date : ' || today);
+dbms_output.put_line('Day of week : ' || weekday);
+
+end;
+/
+
+
+
+Output : 
+
+Average Marks : 32
+Need Improvement
+Date : 03-11-2022
+Day of week : THURSDAY
+
+PL/SQL procedure successfully completed.
+

@@ -1,0 +1,61 @@
+-- Ashmin Jayson S5 DS
+-- Roll No : 14
+-- Experiment 8 : Bank rating assigner using PLSQL
+-- Date : 03/11/22
+
+Table Creation and Insertion : 
+
+create table accounts(Accno number(20), Name varchar(20), Balance number(20));
+
+insert into accounts values(1, 'Ram', 50000);
+insert into accounts values(2, 'Raj', 600);
+insert into accounts values(3, 'Kishore', 400);
+insert into accounts values(4, 'Kambi', 15000);
+insert into accounts values(5, 'Rish', 75000);
+
+
+Program Code :
+
+create or replace function dc(x in number) return varchar is 
+msg varchar(10);
+begin
+	if x > 50000 then
+		msg:='Platinum';
+	elsif x > 10000 then
+		msg:='Gold';
+	else 
+		msg:='Silver';
+	end if;
+	return msg;
+end;
+/
+
+Output : 
+
+select accno, name, balance, dc(balance) from accounts;
+
+     ACCNO NAME 		   BALANCE
+---------- -------------------- ----------
+DC(BALANCE)
+--------------------------------------------------------------------------------
+	 1 Ram			     50000
+Gold
+
+	 2 Raj			       600
+Silver
+
+	 3 Kishore		       400
+Silver
+
+
+     ACCNO NAME 		   BALANCE
+---------- -------------------- ----------
+DC(BALANCE)
+--------------------------------------------------------------------------------
+	 4 Kambi		     15000
+Gold
+
+	 5 Rish 		     75000
+Platinum
+
+
