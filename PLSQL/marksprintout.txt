@@ -5,26 +5,36 @@
 
 Table Creation and Insertion :
 
-create table students(RollNo number(10), Name varchar(20), Marks number(10));
+create table students(RollNo number(10), Name varchar(20), Mark1 number(10), Mark2 number(10), Mark3 number(10));
 
-insert into students values(1, 'Anz', 100);
-insert into students values(2, 'Aysha', 99);
-insert into students values(3, 'Ramanan', 10);
-insert into students values(4, 'Kishore', 2);
-insert into students values(5, 'Tom', 0);
-insert into students values(6, 'Asssh', 5);
-insert into students values(7, 'Baiju', 10);
+insert into students values(1, 'Anz', 100, 10, 50);
+insert into students values(2, 'Aysha', 99, 90, 10);
+insert into students values(3, 'Ramanan', 10, 50, 20);
+insert into students values(4, 'Kishore', 2, 10, 70);
+insert into students values(5, 'Tom', 0, 100, 50);
+insert into students values(6, 'Asssh', 5, 15, 25);
+insert into students values(7, 'Baiju', 10, 20, 80);
 
 Program Code : 
 
 set serveroutput on
+accept x number prompt 'Input the Roll Number of the student';
 declare 
+rno number(10);
+mk1 number(10);
+mk2 number(10);
+mk3 number(10);
 avgm number(10);
 today varchar(20);
 weekday varchar(20);
 begin
-select avg(marks) into avgm from students;
+rno:=&x;
+select mark1 into mk1 from students where rollno = rno;
+select mark2 into mk2 from students where rollno = rno;
+select mark2 into mk3 from students where rollno = rno;
 
+avgm:=mk1+mk2+mk3;
+avgm:=avgm/3;
 dbms_output.put_line('Average Marks : ' || avgm);
 if avgm < 40 then
 	dbms_output.put_line('Need Improvement');
@@ -40,13 +50,26 @@ end;
 /
 
 
-
 Output : 
 
-Average Marks : 32
+Input the Roll Number of the student2
+old  10: rno:=&x;
+new  10: rno:=	       2;
+Average Marks : 93
+Date : 03-11-2022
+Day of week : THURSDAY
+
+PL/SQL procedure successfully completed.
+
+
+Input the Roll Number of the student6
+old  10: rno:=&x;
+new  10: rno:=	       6;
+Average Marks : 12
 Need Improvement
 Date : 03-11-2022
 Day of week : THURSDAY
 
 PL/SQL procedure successfully completed.
+
 
