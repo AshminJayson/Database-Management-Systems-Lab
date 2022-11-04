@@ -1,0 +1,156 @@
+-- Ashmin Jayson S5 DS
+-- Roll No : 14
+-- Experiment 6 : Banking system using PLSQL
+-- Date : 31/10/22
+
+
+Table Creation and Insertion:
+
+create table accounts(Accno number(20), Name varchar(20), Balance number(20));
+
+insert into accounts values(1, 'Ram', 50000);
+insert into accounts values(2, 'Raj', 600);
+insert into accounts values(3, 'Kishore', 400);
+insert into accounts values(4, 'Kambi', 15000);
+insert into accounts values(5, 'Rish', 75000);
+
+Program Code : 
+
+---a---
+
+set serveroutput on
+accept x char prompt '1.Debit 2.Credit 3.View Balance ';
+accept paccno number prompt 'Enter the account number : ';
+accept tval number prompt 'Enter the value to be transacted (or 0 if none) : ';
+DECLARE
+bal number(20);
+minbal number(20):=500;
+taccno number(20);
+val number(20);
+ch char;
+BEGIN
+
+ch:=&x;
+taccno:=&paccno;
+val:=&tval;
+
+select balance into bal from accounts where accno = taccno;
+
+case
+	when ch = '1' then
+		if ((bal - val) >= minbal) then
+			bal:=bal-val;
+			update accounts set balance = bal where accno = taccno;
+			dbms_output.put_line('Rs ' || val || ' has been debited from account number ' || taccno);
+			dbms_output.put_line('Current Balance : ' || bal);
+			commit;
+		else 
+			dbms_output.put_line('Insufficient Funds available to perform debit');
+		end if;
+	when ch = '2' then
+		bal:=bal+val;
+		update accounts set balance = bal where accno = taccno;
+		dbms_output.put_line('Rs ' || val || ' has been credited to account number ' || taccno);
+		dbms_output.put_line('Current Balance : ' || bal);
+		commit;
+	when ch = '3' then
+		dbms_output.put_line('Current Balance : ' || bal);
+end case;
+
+END;
+/
+
+Output : 
+
+1.Debit 2.Credit 3.View Balance 3
+Enter the account number : 3
+Enter the value to be transacted (or 0 if none) : 0
+old   9: ch:=&x;
+new   9: ch:=3;
+old  10: taccno:=&paccno;
+new  10: taccno:=	  3;
+old  11: val:=&tval;
+new  11: val:=	       0;
+Current Balance : 400
+
+PL/SQL procedure successfully completed.
+
+
+1.Debit 2.Credit 3.View Balance 1
+Enter the account number : 2
+Enter the value to be transacted (or 0 if none) : 500
+old   9: ch:=&x;
+new   9: ch:=1;
+old  10: taccno:=&paccno;
+new  10: taccno:=	  2;
+old  11: val:=&tval;
+new  11: val:=	     500;
+Insufficient Funds available to perform debit
+
+PL/SQL procedure successfully completed.
+
+1.Debit 2.Credit 3.View Balance 2
+Enter the account number : 2
+Enter the value to be transacted (or 0 if none) : 10000
+old   9: ch:=&x;
+new   9: ch:=2;
+old  10: taccno:=&paccno;
+new  10: taccno:=	  2;
+old  11: val:=&tval;
+new  11: val:=	   10000;
+Rs 10000 has been credited to account number 2
+Current Balance : 10600
+
+PL/SQL procedure successfully completed.
+
+
+---b---
+set serveroutput on
+
+accept paccno number prompt 'Enter the account number : ';
+DECLARE
+bal number(20);
+minbal number(20):=500;
+taccno number(20);
+val number(20):=200;
+
+BEGIN
+
+taccno:=&paccno;
+
+select balance into bal from accounts where accno = taccno;
+
+if ((bal - val) > minbal) then
+	bal:=bal-200;
+	update accounts set balance = bal where taccno = accno;
+	commit;
+	dbms_output.put_line('Rs 200 has be debited from account number : ' || taccno);
+else
+	dbms_output.put_line('Insufficient funds in account');
+end if;
+dbms_output.put_line('Current Balance : ' || bal);
+end;
+/
+
+Output : 
+
+Enter the account number : 2
+old   9: taccno:=&paccno;
+new   9: taccno:=	  2;
+Insufficient funds in account
+
+PL/SQL procedure successfully completed.
+
+Enter the account number : 1
+old   9: taccno:=&paccno;
+new   9: taccno:=	  1;
+Rs 200 has be debited from account number : 1
+Current Balance : 49800
+
+PL/SQL procedure successfully completed.
+
+
+
+
+
+

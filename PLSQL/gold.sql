@@ -1,4 +1,4 @@
-create or replace function dc(x in number) return varchar is 
+create or replace function categorize(x in number) return varchar is 
 msg varchar(10);
 begin
 	if x > 50000 then
@@ -11,3 +11,5 @@ begin
 	return msg;
 end;
 /
+
+

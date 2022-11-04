@@ -1,0 +1,60 @@
+Table creation and insertion : 
+
+create table homes(name varchar(10), prevunits float(10), currunits float(10));
+
+insert into homes values('Ramesh', 100, 600);
+insert into homes values('Suresh', 10, 800);
+insert into homes values('Sura', 100, 200);
+insert into homes values('Ram', 150, 175);
+insert into homes values('Kishore', 200, 400);
+
+Program Code : 
+
+set serveroutput on
+
+declare 
+cursor homeowners is select * from homes;
+unitsused number(38);
+billamount float(38);
+
+begin
+dbms_output.put_line('Electricity Bills');
+for i in homeowners loop
+	unitsused := i.currunits - i.prevunits;
+	if unitsused > 500 then
+		billamount := unitsused * 22.5;
+	elsif unitsused > 300 then
+		billamount := unitsused * 15;
+	elsif unitsused > 100 then
+		billamount := unitsused * 7.5;
+	else 
+		billamount := unitsused * 5;
+	end if;
+dbms_output.put_line('Name : ' || i.name || ' Units Consumed : ' || unitsused || ' Bill Amount : ' || billamount);
+end loop;
+end;
+/
+
+Output : 
+
+-> select * from homes;
+
+NAME	    PREVUNITS  CURRUNITS
+---------- ---------- ----------
+Ramesh		  100	     600
+Suresh		   10	     800
+Sura		  100	     200
+Ram		  150	     175
+Kishore 	  200	     400
+
+
+@electric.sql
+Electricity Bills
+Name : Ramesh Units Consumed : 500 Bill Amount : 7500
+Name : Suresh Units Consumed : 790 Bill Amount : 17775
+Name : Sura Units Consumed : 100 Bill Amount : 500
+Name : Ram Units Consumed : 25 Bill Amount : 125
+Name : Kishore Units Consumed : 200 Bill Amount : 1500
+
+PL/SQL procedure successfully completed.
+

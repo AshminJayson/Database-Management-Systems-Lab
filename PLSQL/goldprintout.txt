@@ -5,18 +5,19 @@
 
 Table Creation and Insertion : 
 
-create table accounts(Accno number(20), Name varchar(20), Balance number(20));
+create table accounts(Accno number(10), Name varchar(10), Balance number(10));
 
 insert into accounts values(1, 'Ram', 50000);
 insert into accounts values(2, 'Raj', 600);
 insert into accounts values(3, 'Kishore', 400);
-insert into accounts values(4, 'Kambi', 15000);
+insert into accounts values(4, 'Thambi', 15000);
 insert into accounts values(5, 'Rish', 75000);
 
 
 Program Code :
 
-create or replace function dc(x in number) return varchar is 
+Function:
+create or replace function categorize(x in number) return varchar is 
 msg varchar(10);
 begin
 	if x > 50000 then
@@ -30,32 +31,62 @@ begin
 end;
 /
 
+
+
+Calling Program:
+
+set serveroutput on
+
+accept x number prompt 'Enter the account number : '
+
+declare
+taccno number(2);
+bal number(10);
+rating  varchar(20);
+
+begin
+taccno:=&x;
+select balance into bal from accounts where accno = taccno; 
+rating := categorize(bal);
+dbms_output.put_line('The account number : ' || taccno || ' is in the ' || rating || ' category'); 
+
+end;
+/
+
 Output : 
 
-select accno, name, balance, dc(balance) from accounts;
+-> select * from accounts;
 
-     ACCNO NAME 		   BALANCE
----------- -------------------- ----------
-DC(BALANCE)
---------------------------------------------------------------------------------
-	 1 Ram			     50000
-Gold
-
-	 2 Raj			       600
-Silver
-
-	 3 Kishore		       400
-Silver
+     ACCNO NAME 	 BALANCE
+---------- ---------- ----------
+	 1 Ram		   50000
+	 2 Raj		     600
+	 3 Kishore	     400
+	 4 Thambi	   15000
+	 5 Rish 	   75000
 
 
-     ACCNO NAME 		   BALANCE
----------- -------------------- ----------
-DC(BALANCE)
---------------------------------------------------------------------------------
-	 4 Kambi		     15000
-Gold
+@goldcaller.sql
+Enter the account number : 5
+old   7: taccno:=&x;
+new   7: taccno:=	  5;
+The account number : 5 is in the Platinum category
 
-	 5 Rish 		     75000
-Platinum
+PL/SQL procedure successfully completed.
 
+@goldcaller.sql
+Enter the account number : 2
+old   7: taccno:=&x;
+new   7: taccno:=	  2;
+The account number : 2 is in the Silver category
+
+PL/SQL procedure successfully completed.
+
+@goldcaller.sql
+Enter the account number : 4
+old   7: taccno:=&x;
+new   7: taccno:=	  4;
+The account number : 4 is in the Gold category
+
+PL/SQL procedure successfully completed.
 
