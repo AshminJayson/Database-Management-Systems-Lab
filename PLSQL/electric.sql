@@ -1,24 +1,41 @@
 set serveroutput on
-
+accept x char prompt 'Enter consumer no : ';
 declare 
 cursor homeowners is select * from homes;
-unitsused number(38);
-billamount float(38);
+unit float;
+unitc float;
+bill float;
+choice int;
 
 begin
-dbms_output.put_line('Electricity Bills');
+choice := &x;
 for i in homeowners loop
-	unitsused := i.currunits - i.prevunits;
-	if unitsused > 500 then
-		billamount := unitsused * 22.5;
-	elsif unitsused > 300 then
-		billamount := unitsused * 15;
-	elsif unitsused > 100 then
-		billamount := unitsused * 7.5;
-	else 
-		billamount := unitsused * 5;
+	if i.cno = choice then
+		bill := 0;
+		unit := i.currunits - i.prevunits;
+		unitc := unit;
+	if (unit > 500) then
+		bill := bill + 100 * 5 + 200 * 7.5 + 200 * 15;
+		unit := unit - 500;
+		bill := bill + 22.5 * unit;
+	elsif (unit > 300) then
+		bill := bill + 100 * 5 + 200 * 7.5;
+		unit := unit - 300;
+		bill := bill + 15 * unit;
+	elsif (unit > 100) then
+		bill := bill * 100 * 5;
+		unit := unit - 100;
+		bill := bill + 7.5 * unit;
+	else
+		bill := unit * 5;
 	end if;
-dbms_output.put_line('Name : ' || i.name || ' Units Consumed : ' || unitsused || ' Bill Amount : ' || billamount);
-end loop;
+	dbms_output.put_line('Consumer No : ' || i.cno);
+	dbms_output.put_line('Consumer Name : ' || i.name);
+	dbms_output.put_line('Units consumed : ' || unitc);
+	dbms_output.put_line('Bill Amount : ' || bill);
+	end if;
+	end loop;
+
+
 end;
 /

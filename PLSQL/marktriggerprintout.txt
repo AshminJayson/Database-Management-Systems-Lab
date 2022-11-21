@@ -1,0 +1,108 @@
+-- Ashmin Jayson S5 DS
+-- Roll No : 14
+-- Experiment 11 : Trigger on student table
+-- Date : 17/11/22
+
+Table Creation and Insertion :
+
+create table students(RollNo number(10), Name varchar(20), Sem1sgpa float(10), Sem2sgpa float(10));
+
+insert into students values(1, 'Anz', 9.2, 10);
+insert into students values(2, 'Aysha', 8.4, 7.9);
+insert into students values(3, 'Ramanan',4.2, 3.1);
+insert into students values(4, 'Kishore', 2.9, 10);
+insert into students values(5, 'Tom', 6.6, 7.5);
+insert into students values(6, 'Asssh', 5.9, 5.5);
+insert into students values(7, 'Baiju', 1.3, 2.8);
+
+Output
+
+@marktrigger.sql
+
+Trigger created.
+
+SQL> Trigger Message : Inserting Aysha
+
+1 row created.
+
+SQL> Trigger Message : Inserting Ramanan
+
+1 row created.
+
+SQL> Trigger Message : Inserting Kishore
+
+1 row created.
+
+SQL> Trigger Message : Inserting Tom
+
+1 row created.
+
+SQL> Trigger Message : Inserting Asssh
+
+1 row created.
+
+
+Program Code : 
+
+set serveroutput on
+create or replace trigger ted
+before insert or update of rollno, name, sem1sgpa, sem2sgpa or 
+delete
+on students
+for each row
+begin
+case 
+    when inserting then
+        dbms_output.put_line('Trigger Message : Inserting ' || :new.name);
+    when updating('rollno') then   
+        dbms_output.put_line('Trigger Message : Updating rollno ' || :old.rollno || ' to ' || :new.rollno);
+    when updating('sem1sgpa') then 
+        dbms_output.put_line('Trigger Message : Updating sem1 grade ' || :old.sem1sgpa || ' to ' || :new.sem1sgpa);
+    when updating('sem2sgpa') then 
+        dbms_output.put_line('Trigger Message : Updating sem2 grade ' || :old.sem2sgpa || ' to ' || :new.sem2sgpa);
+    when deleting then
+        dbms_output.put_line('Trigger Message : Deleting ' || :old.name);
+end case;
+end;
+/
+
+Output : 
+
+select * from students;
+
+    ROLLNO NAME 		  SEM1SGPA   SEM2SGPA
+---------- -------------------- ---------- ----------
+	 1 Anz			       9.2	   10
+	 2 Aysha		       8.4	  7.9
+	 3 Ramanan		       4.2	  3.1
+	 4 Kishore		       2.9	   10
+	 5 Tom			       6.6	  7.5
+	 6 Asssh		       5.9	  5.5
+	 7 Baiju		       1.3	  2.8
+
+7 rows selected.
+
+update students set sem1sgpa = 10 where name = 'Tom';
+Trigger Message : Updating sem1 grade 6.6 to 10
+
+1 row updated.
+
+delete from students where rollno = 7;
+Trigger Message : Deleting Baiju
+
+1 row deleted.
+
+    ROLLNO NAME 		  SEM1SGPA   SEM2SGPA
+---------- -------------------- ---------- ----------
+	 1 Anz			       9.2	   10
+	 2 Aysha		       8.4	  7.9
+	 3 Ramanan		       4.2	  3.1
+	 4 Kishore		       2.9	   10
+	 5 Tom				10	  7.5
+	 6 Asssh		       5.9	  5.5
+
+6 rows selected.
+
+
+
+

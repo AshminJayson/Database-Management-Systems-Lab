@@ -1,0 +1,14 @@
+create table students(rollno int, name varchar(25), mark1 float, mark2 float, mark3 float, total float, avg float);
+
+
+insert into students values(1, 'Anz', 100, 10, 50);
+insert into students values(2, 'Aysha', 99, 90, 10);
+insert into students values(3, 'Ramanan', 10, 50, 20);
+insert into students values(4, 'Kishore', 2, 10, 70);
+insert into students values(5, 'Tom', 0, 100, 50);
+insert into students values(6, 'Asssh', 5, 15, 25);
+insert into students values(7, 'Baiju', 10, 20, 80);
+
+
+create table studentsa(rollno int, name varchar(25), mark1 float, mark2 float, mark3 float, total float, avg float);
+

@@ -1,0 +1,118 @@
+-- Ashmin Jayson S5 DS
+-- Roll No : 14
+-- Experiment 14 : Employee management system using package
+-- Date : 21/11/22
+
+create table employeedetails(eid int, ename varchar(20), eaddress varchar(20), esalary int);
+
+Program Code : 
+ 
+-- Declaration 
+
+
+create or replace package e_pack as 
+    procedure addRec(
+        e_id employeedetails.eid%type,
+        e_name employeedetails.ename%type,
+        e_address employeedetails.eaddress%type,
+        e_sal employeedetails.esalary%type);
+
+    procedure delRec(e_id employeedetails.eid%type);
+
+    procedure listEmp;
+
+    function getSal(x in number) return number;
+
+end e_pack;
+/
+
+
+-- Definition
+
+set serveroutput on
+
+create or replace package body e_pack as 
+
+    procedure addRec(
+        e_id employeedetails.eid%type,
+        e_name employeedetails.ename%type,
+        e_address employeedetails.eaddress%type,
+        e_sal employeedetails.esalary%type)
+    is 
+    begin
+        insert into employeedetails(eid, ename, eaddress, esalary) values (e_id, e_name, e_address, e_sal);
+        dbms_output.put_line('Inserted EID : ' || e_id);
+        dbms_output.put_line('-------------Insertion Completed---------------');
+
+    end addRec;
+
+    procedure delRec(e_id employeedetails.eid%type)
+    is
+    begin
+        delete from employeedetails where eid = e_id;
+        dbms_output.put_line('Deleted EID : ' || e_id);
+        dbms_output.put_line('------------Deletion Completed----------------');
+
+    end delRec;
+
+    procedure listEmp
+    is
+        cursor cur is select * from employeedetails;
+    begin
+        for i in cur loop
+            dbms_output.put_line('EID : ' || i.eid || ' Name : ' || i.ename || ' Address: ' || i.eaddress || ' Salary : ' || i.esalary);
+        end loop;
+        dbms_output.put_line('---------------------------------------');
+    end listEmp;
+
+    function getSal(x in number) return number
+    is
+    e_sal employeedetails.esalary%type;
+    begin
+        select esalary into e_sal from employeedetails where eid = x;
+        dbms_output.put_line('Employee ID : ' || x || ' Salary : ' || e_sal);
+        return e_sal;
+    end getSal;
+
+end e_pack;
+/
+
+
+Output :
+
+
+@employeepackage.sql;
+
+Package created.
+
+SQL> @packagebody.sql;
+
+Package body created.
+
+SQL> @packrun.sql;
+Enter value for eidtodelete: 3
+old   5: eidtodelete:=&eidtodelete;
+new   5: eidtodelete:=3;
+Enter value for eidtodisplay: 10
+old   6: eidtodisplay:=&eidtodisplay;
+new   6: eidtodisplay:=10;
+Inserted EID : 1
+-------------Insertion Completed---------------
+Inserted EID : 3
+-------------Insertion Completed---------------
+EID : 1 Name : Rish Address: Kothamangalam Salary : 150000
+EID : 3 Name : Kish Address: Kottayam Salary : 200000
+---------------------------------------
+Deleted EID : 3
+------------Deletion Completed----------------
+Inserted EID : 5
+-------------Insertion Completed---------------
+EID : 1 Name : Rish Address: Kothamangalam Salary : 150000
+EID : 5 Name : Mish Address: Mangalam Salary : 2000
+---------------------------------------
+Inserted EID : 10
+-------------Insertion Completed---------------
+Employee ID : 10 Salary : 200040
+Salary : 200040
+
+PL/SQL procedure successfully completed.

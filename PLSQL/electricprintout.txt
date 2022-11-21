@@ -1,60 +1,101 @@
+-- Ashmin Jayson S5 DS
+-- Roll No : 14
+-- Experiment 10 : Electricity Bill
+-- Date : 17/11/22
+
 Table creation and insertion : 
 
-create table homes(name varchar(10), prevunits float(10), currunits float(10));
+create table homes(cno number(30), name varchar(10), prevunits float(10), currunits float(10));
 
-insert into homes values('Ramesh', 100, 600);
-insert into homes values('Suresh', 10, 800);
-insert into homes values('Sura', 100, 200);
-insert into homes values('Ram', 150, 175);
-insert into homes values('Kishore', 200, 400);
+insert into homes values(1,'Ramesh', 100, 600);
+insert into homes values(2,'Suresh', 10, 800);
+insert into homes values(3,'Sura', 100, 200);
+insert into homes values(4,'Ram', 150, 175);
+insert into homes values(5,'Kishore', 200, 400);
 
 Program Code : 
 
 set serveroutput on
-
+accept x char prompt 'Enter consumer no : ';
 declare 
 cursor homeowners is select * from homes;
-unitsused number(38);
-billamount float(38);
+unit float;
+unitc float;
+bill float;
+choice int;
 
 begin
-dbms_output.put_line('Electricity Bills');
+choice := &x;
 for i in homeowners loop
-	unitsused := i.currunits - i.prevunits;
-	if unitsused > 500 then
-		billamount := unitsused * 22.5;
-	elsif unitsused > 300 then
-		billamount := unitsused * 15;
-	elsif unitsused > 100 then
-		billamount := unitsused * 7.5;
-	else 
-		billamount := unitsused * 5;
+	if i.cno = choice then
+		bill := 0;
+		unit := i.currunits - i.prevunits;
+		unitc := unit;
+	if (unit > 500) then
+		bill := bill + 100 * 5 + 200 * 7.5 + 200 * 15;
+		unit := unit - 500;
+		bill := bill + 22.5 * unit;
+	elsif (unit > 300) then
+		bill := bill + 100 * 5 + 200 * 7.5;
+		unit := unit - 300;
+		bill := bill + 15 * unit;
+	elsif (unit > 100) then
+		bill := bill * 100 * 5;
+		unit := unit - 100;
+		bill := bill + 7.5 * unit;
+	else
+		bill := unit * 5;
 	end if;
-dbms_output.put_line('Name : ' || i.name || ' Units Consumed : ' || unitsused || ' Bill Amount : ' || billamount);
-end loop;
+	dbms_output.put_line('Consumer No : ' || i.cno);
+	dbms_output.put_line('Consumer Name : ' || i.name);
+	dbms_output.put_line('Units consumed : ' || unitc);
+	dbms_output.put_line('Bill Amount : ' || bill);
+	end if;
+	end loop;
+
+
 end;
 /
+
 
 Output : 
 
 -> select * from homes;
 
-NAME	    PREVUNITS  CURRUNITS
----------- ---------- ----------
-Ramesh		  100	     600
-Suresh		   10	     800
-Sura		  100	     200
-Ram		  150	     175
-Kishore 	  200	     400
+ select * from homes;
+
+       CNO NAME        PREVUNITS  CURRUNITS
+---------- ---------- ---------- ----------
+	 1 Ramesh	     100	600
+	 2 Suresh	      10	800
+	 3 Sura 	     100	200
+	 4 Ram		     150	175
+	 5 Kishore	     200	400
 
 
 @electric.sql
-Electricity Bills
-Name : Ramesh Units Consumed : 500 Bill Amount : 7500
-Name : Suresh Units Consumed : 790 Bill Amount : 17775
-Name : Sura Units Consumed : 100 Bill Amount : 500
-Name : Ram Units Consumed : 25 Bill Amount : 125
-Name : Kishore Units Consumed : 200 Bill Amount : 1500
+Enter consumer no : 2
+old   9: choice := &x;
+new   9: choice := 2;
+Consumer No : 2
+Consumer Name : Suresh
+Units consumed : 790
+Bill Amount : 11525
 
 PL/SQL procedure successfully completed.
+
+@electric.sql
+Enter consumer no : 1
+old   9: choice := &x;
+new   9: choice := 1;
+Consumer No : 1
+Consumer Name : Ramesh
+Units consumed : 500
+Bill Amount : 5000
+
+PL/SQL procedure successfully completed.
+
+
+
+
 

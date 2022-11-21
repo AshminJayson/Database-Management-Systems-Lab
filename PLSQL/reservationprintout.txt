@@ -1,0 +1,139 @@
+-- Ashmin Jayson S5 DS
+-- Roll No : 14
+-- Experiment 13 : railway Reservation
+-- Date : 17/11/22
+
+Table Creation and Insertion : 
+
+create table trains(tno int, tname varchar(25), tdate Date, destination varchar(25), seats int);
+
+insert into trains (tname, tdate, destination, seats) values('Indira Exp', '20-06-2002', 'AP', 30);
+insert into trains (tname, tdate, destination, seats) values('Raj Exp', '01-10-2022', 'JandK', 60);
+insert into trains (tname, tdate, destination, seats) values('Shatabh Exp', '23-09-1994', 'HP', 15);
+
+
+select * from trains;
+       TNO TNAME		     TDATE    DESTINATION
+---------- ------------------------- -------- -------------------------
+     SEATS
+----------
+	 1 Indira Exp		     20-06-02 AP
+	30
+
+	 2 Raj Exp		     01-10-22 JandK
+	60
+
+	 3 Shatabh Exp		     23-09-94 HP
+	15
+
+Program Code
+
+create sequence trainseq;
+create or replace trigger te
+before insert on trains
+for each row
+begin
+    select trainseq.nextval into :new.tno from dual;
+end;
+/
+
+set serveroutput on
+accept x char prompt '1.Reservation 2.Cancellation 3.View Available Seats';
+declare
+seatstobook int;
+seatsremaining int;
+trainno int;
+choice char;
+begin
+choice := &x;
+trainno := &trainno;
+seatstobook := &seatstobook;
+select seats into seatsremaining from trains where tno = trainno;
+
+case choice
+when '1' then  
+    if ((seatsremaining - seatstobook) >= 0) then
+        update trains set seats = seatsremaining - seatstobook where tno = trainno;
+        commit;
+        seatsremaining := seatsremaining - seatstobook;
+        dbms_output.put_line('Successfully Booked - Train No : ' || trainno || ' -- ' || seatsremaining || ' seats remaining');
+    else
+        dbms_output.put_line('Booking unsuccessful ! Train No : ' || trainno || ' does not have sufficient seats');
+    end if;
+when '2' then
+    update trains set seats = seatsremaining + seatstobook where tno = trainno;
+    seatsremaining := seatsremaining + seatstobook;
+    dbms_output.put_line('Cancellation Successful ! Train Number : ' || trainno || ' : ' || seatsremaining || ' seats remaining');
+    commit;
+when '3' then  
+    dbms_output.put_line('Train Number : ' || trainno || ' : ' || seatsremaining || ' seats remaining');
+end case;
+end;
+/
+
+Output
+
+Sequence created.
+
+
+Trigger created.
+
+
+@railwaysreserv.sql
+1.Reservation 2.Cancellation 3.View Available Seats3
+old   7: choice := &x;
+new   7: choice := 3;
+Enter value for trainno: 1
+old   8: trainno := &trainno;
+new   8: trainno := 1;
+Enter value for seatstobook: 0
+old   9: seatstobook := &seatstobook;
+new   9: seatstobook := 0;
+Train Number : 1 : 30 seats remaining
+
+PL/SQL procedure successfully completed.
+
+
+@railwaysreserv.sql
+1.Reservation 2.Cancellation 3.View Available Seats1
+old   7: choice := &x;
+new   7: choice := 1;
+Enter value for trainno: 1
+old   8: trainno := &trainno;
+new   8: trainno := 1;
+Enter value for seatstobook: 15
+old   9: seatstobook := &seatstobook;
+new   9: seatstobook := 15;
+Successfully Booked - Train No : 1 -- 15 seats remaining
+
+PL/SQL procedure successfully completed.
+
+select * from trains;
+
+    TNO TNAME		     TDATE    DESTINATION
+---------- ------------------------- -------- -------------------------
+    SEATS
+----------
+    1 Indira Exp		     20-06-02 AP
+15
+
+    2 Raj Exp		     01-10-22 JandK
+60
+
+    3 Shatabh Exp		     23-09-94 HP
+15
+
+@railwaysreserv.sql
+1.Reservation 2.Cancellation 3.View Available Seats2
+old   7: choice := &x;
+new   7: choice := 2;
+Enter value for trainno: 1
+old   8: trainno := &trainno;
+new   8: trainno := 1;
+Enter value for seatstobook: 5
+old   9: seatstobook := &seatstobook;
+new   9: seatstobook := 5;
+Cancellation Successful ! Train Number : 1 : 20 seats remaining
+
+PL/SQL procedure successfully completed.
+
