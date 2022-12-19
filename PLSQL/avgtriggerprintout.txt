@@ -1,0 +1,53 @@
+Ashmin Jayson S5DS Rollno : 14
+Experiment No : 12 Total mark and average updation trigger;
+
+Table Creation:
+
+create table students(rollno int, name varchar(25), mark1 float, mark2 float, mark3 float, total float, average float);
+
+Program Code : 
+
+(Code Executed on mysql)
+
+-> delimiter //
+
+create trigger averager 
+before insert on students
+for each row 
+begin
+set new.total = new.mark1 + new.mark2 + new.mark3;
+set new.average = new.total / 3;
+
+end
+//
+
+
+Output:
+
+
+insert into students values(1, 'Anz', 100, 10, 50, null, null);
+
+select * from students;
+    -> //
++--------+------+-------+-------+-------+-------+---------+
+| rollno | name | mark1 | mark2 | mark3 | total | average |
++--------+------+-------+-------+-------+-------+---------+
+|      1 | Anz  |   100 |    10 |    50 |   160 | 53.3333 |
++--------+------+-------+-------+-------+-------+---------+
+
+
+insert into students values(2, 'Aysha', 99, 90, 10, null, null);
+insert into students values(3, 'Ramanan', 10, 50, 20, null, null);
+
+
+select * from students;
++--------+---------+-------+-------+-------+-------+---------+
+| rollno | name    | mark1 | mark2 | mark3 | total | average |
++--------+---------+-------+-------+-------+-------+---------+
+|      1 | Anz     |   100 |    10 |    50 |   160 | 53.3333 |
+|      2 | Aysha   |    99 |    90 |    10 |   199 | 66.3333 |
+|      3 | Ramanan |    10 |    50 |    20 |    80 | 26.6667 |
++--------+---------+-------+-------+-------+-------+---------+
+3 rows in set (0.00 sec)
+
+
