@@ -1,0 +1,78 @@
+#CRUD operations in Mongo DB
+#Creation and Insertion
+
+Atlas atlas-faz0fc-shard-0 [primary] myFirstDatabase> db.library.insertMany([
+... {book: 'Harry Potter', qty:10, author: 'JK Rowling'},
+... {book: 'Two States', qty:2, author: 'Chetan Bhagat'},
+... {book: 'Harry Potter', qty:10, author: 'Mahatma Gandhi'},
+... ]
+... )
+
+#Response 
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("63bb8ee8d202373a21bd0f0d"),
+    '1': ObjectId("63bb8ee8d202373a21bd0f0e"),
+    '2': ObjectId("63bb8ee8d202373a21bd0f0f")
+  }
+}
+
+
+-------------------------------------------
+
+#Read
+
+Atlas atlas-faz0fc-shard-0 [primary] myFirstDatabase> db.library.findOne({author: 'JK Rowling'})
+{
+  _id: ObjectId("63bb8ee8d202373a21bd0f0d"),
+  book: 'Harry Potter',
+  qty: 10,
+  author: 'JK Rowling'
+}
+
+
+------------------------------------------
+
+#Updation
+
+Atlas atlas-faz0fc-shard-0 [primary] myFirstDatabase> db.library.updateOne({book: 'Two States'},{$set:{qty:25}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+Atlas atlas-faz0fc-shard-0 [primary] myFirstDatabase> db.library.findOne({book: 'Two States'})
+{
+  _id: ObjectId("63bb8ee8d202373a21bd0f0e"),
+  book: 'Two States',
+  qty: 25,
+  author: 'Chetan Bhagat'
+}
+
+
+-----------------------------------------
+
+#Deletion
+
+Atlas atlas-faz0fc-shard-0 [primary] myFirstDatabase> db.library.deleteOne({book: 'Harry Potter'})
+{ acknowledged: true, deletedCount: 1 }
+
+Atlas atlas-faz0fc-shard-0 [primary] myFirstDatabase> db.library.find()
+[
+  {
+    _id: ObjectId("63bb8ee8d202373a21bd0f0e"),
+    book: 'Two States',
+    qty: 25,
+    author: 'Chetan Bhagat'
+  },
+  {
+    _id: ObjectId("63bb8ee8d202373a21bd0f0f"),
+    book: 'Harry Potter',
+    qty: 10,
+    author: 'Mahatma Gandhi'
+  }
+]
